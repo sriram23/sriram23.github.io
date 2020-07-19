@@ -1,17 +1,23 @@
+import myFirstBlog from './blogs/myFirstBlog'
+import gitPart1 from './blogs/gitPart1'
+
 const blogs = [
     {
+        id: 0,
         title: 'My First Blog',
         date: '17-Jul-2020',
         image: '',
         author: 'Sriram',
-        content: `
-            <b>Hello World!</b>
-            <p>This is my first blog in my very own website, where each and every component, styles and everything carved by me.</p>
-            <p>Feel free to tour this website and send me your valuable suggestions.</p>
-            <p>Write to me <a href='mailto://sriramsubramanian23@gmail.com'>sriramsubramanian23@gmail.com</a></p>
-            <p>Thank you!</p>
-        `,
+        content: myFirstBlog,
     },
+    {
+        id: 1,
+        title: 'Beginner’s guide to Git and version control — Chapter1',
+        date: '03-May-2020',
+        image: '',
+        author: 'Sriram',
+        content: gitPart1,
+    }
 ]
 
 export default blogs;

@@ -11,7 +11,7 @@ const router = new Router({
       // dynamic segments start with a colon
       { path: '/', name: 'Home', component: Home},
       { path: '/blog', name: 'Blog', component: Blog },
-      { path: '/blog/view', name: 'BlogView', component: BlogView }
+      { path: '/blog/:id/:title', name: 'BlogView', component: BlogView }
     ]
   })
 

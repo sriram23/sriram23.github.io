@@ -39,8 +39,6 @@ export default {
     box-shadow: 0 0 10px #000000;
     border-radius: 0.5rem;
     padding: 2rem;
-    // overflow:hidden;
-    // max-width: 100%;
     .profile-img-container{
         display: flex;
         align-items: center;
@@ -77,7 +75,6 @@ export default {
     .blog-card-container{
         flex-direction: column;
         align-items: center;
-        // width: 100%;
     }
     .blog-title {
         font-size: 2rem !important;

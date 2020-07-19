@@ -1,6 +1,6 @@
 <template>
     <div class="blog-container">
-        <div class="blog-card" v-for="(blog,i) in myBlogs" :key="i">
+        <div class="blog-card" v-for="blog in blogs" :key="blog.id">
             <BlogCard @cardClicked="navigateTo(blog,i)" :title="blog.title" :author="blog.author" :desc="blog.content" :date="blog.date"/>
         </div>
     </div>
@@ -8,7 +8,7 @@
 
 <script>
 import BlogCard from './blog-card'
-import blogs from './readBlog'
+import { mapState } from 'vuex'
 
 export default {
     name: 'Blog',
@@ -17,19 +17,18 @@ export default {
     },
     data() {
         return{
-            myBlogs: {}
         }
+    },
+    computed: {
+        ...mapState([
+            'blogs'
+        ])
     },
     methods: {
-        navigateTo(blog,index) {
-            console.log('skjhskdfh',blog, index);
-            this.$router.push({name:'BlogView', params: blog});
+        navigateTo(blog) {
+            this.$router.push(`/blog/${blog.id}/${blog.title}`);
         }
     },
-    mounted() {
-        this.myBlogs = blogs;
-        console.log('Blogs:', this.myBlogs);
-    }
 }
 </script>
 
@@ -40,7 +39,11 @@ export default {
     align-items: center;
     margin: 2rem !important;
     .blog-card {
-        max-width: 90%;
+        width: 90%;
+        margin: 1rem 0 !important;
+        @media (max-width: 425px) {
+            width: 100%;
+        }
     }
 }
 </style>
