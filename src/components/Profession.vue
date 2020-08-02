@@ -45,12 +45,6 @@ export default {
     .profession-card {
         min-width: 50rem;
         padding: 1rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .profession-card {
-        min-width: unset !important;
         width: 30rem;
     }
 }

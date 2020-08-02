@@ -1,14 +1,15 @@
 <template>
     <div class="blog-container">
-        <div class="blog-card" v-for="blog in blogs" :key="blog.id">
-            <BlogCard @cardClicked="navigateTo(blog,i)" :title="blog.title" :author="blog.author" :desc="blog.content" :date="blog.date"/>
+        <div class="blog-card" v-for="blog in blogs" :key="blog._id">
+            <BlogCard @cardClicked="navigateTo(blog)" :title="blog.title" :author="blog.author" :desc="blog.content" :date="convertTime(blog.createdAt)"/>
         </div>
     </div>
 </template>
 
 <script>
+import moment from 'moment'
 import BlogCard from './blog-card'
-import { mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
     name: 'Blog',
@@ -25,10 +26,22 @@ export default {
         ])
     },
     methods: {
+        ...mapActions(['fetchBlog']),
         navigateTo(blog) {
-            this.$router.push(`/blog/${blog.id}/${blog.title}`);
+            this.$router.push(`/blog/${blog._id}/${blog.title}`);
+        },
+        async renderBlogs() {
+            await this.fetchBlog();
+        },
+        convertTime(isoTime) {
+            const time = moment(isoTime).fromNow();
+            return time;
         }
     },
+    mounted() {
+        this.renderBlogs();
+        console.log('Blogs: ',this.blogs);
+    }
 }
 </script>
 

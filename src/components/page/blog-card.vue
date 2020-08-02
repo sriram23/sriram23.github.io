@@ -6,7 +6,7 @@
             </div>
             <div>
                 <div class="blog-title"><b>{{title}}</b> by <i>{{author}}</i></div>
-                <span class="time-stamp">Published on: {{date}}</span>
+                <span class="time-stamp">Published: {{date}}</span>
                 <div class="html-content" v-html="`${desc.slice(0,200)}...`"></div>
             </div>
     </div>

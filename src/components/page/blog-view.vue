@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div v-for="blog in blogs" :key="blog.id">
-            <div v-if="Number(params.id)===blog.id && params.title===blog.title">
+        <div v-for="blog in blogs" :key="blog._id">
+            <div v-if="params.id===blog._id && params.title===blog.title">
                 <div class="title">{{blog.title}}</div>
                 <div class="blog-content">
                     <h1 style="text-align: center">{{blog.title}}</h1>
@@ -9,13 +9,14 @@
                     <br>
                     <div v-html="blog.content"></div>
                 </div>
-                <div class="footer">Written by <b>{{blog.author}}</b> on <i>{{blog.date}}</i></div>
+                <div class="footer">Written by <b>{{blog.author}}</b> on <i>{{convertTime(blog.createdAt)}}</i></div>
             </div>
         </div>
     </div>
 </template>
 <script>
 import { mapState } from 'vuex'
+import moment from 'moment'
 
 export default {
     name: 'BlogView',
@@ -28,6 +29,12 @@ export default {
         ...mapState([
             'blogs'
         ])
+    },
+    methods: {
+        convertTime(isoTime) {
+            const time = moment(isoTime).fromNow();
+            return time;
+        }
     },
     mounted() {
         this.params = this.$route.params;

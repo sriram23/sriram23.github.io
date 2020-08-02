@@ -37,7 +37,6 @@ export default {
             this.isMenuVisible = !this.isMenuVisible;
         },
         navigateTo(path) {
-            console.log('Path', this.$router);
             this.$router.push(path);
         }
     }
@@ -46,6 +45,9 @@ export default {
 
 <style lang="scss" scoped>
 .header {
+    z-index: 1;
+    position: sticky;
+    top: 0;
     display: flex;
     justify-content: space-between;
     background: #AA0000;
@@ -60,7 +62,8 @@ export default {
 }
 .site-title {
     padding: 0.5rem;
-    font-family: 'Modak', cursive;
+    font-family: 'Electrolize', sans-serif;
+    font-weight: bold;
     font-size: 3.5rem;
 }
 .nav-option {

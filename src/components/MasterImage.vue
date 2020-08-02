@@ -1,7 +1,7 @@
 <template>
     <div class="master-container">
         <div class="master-image-container">
-            <img class="master-image" src="@/assets/master-image.png" alt="master image" />
+            <!-- <img class="master-image" src="@/assets/master-image.png" alt="master image" /> -->
         </div>
         <div class="master-content-container">
             <div class="sub-title">Hello World!</div>
@@ -31,9 +31,11 @@
     border-radius: 5%;
 }
 .master-content-container {
-    background: #990000;
+    background: url(../assets/master.png);
+    background-size: cover;
     color: #ffffff;
     width: 100%;
+    min-height: 80vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
