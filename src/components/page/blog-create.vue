@@ -24,7 +24,6 @@ export default {
         submitBlog() {
             this.postBlog(this.blogData)
             .then((res) => {
-                console.log('Res', res);
                 if(res.status === 200){
                     this.$toasted.success('Blog Upload successful').goAway(3000);
                     this.$router.replace('/blog');
