@@ -6,8 +6,8 @@ export default {
         commit('newBlog', blog);
         return response;
     },
-    fetchBlog: async ({ commit }) => {
-        const response = await axios.get('https://blooming-sea-36559.herokuapp.com/fetch-blog');
+    fetchBlog: async ({ commit }, payload) => {
+        const response = await axios.get(`https://blooming-sea-36559.herokuapp.com/fetch-blog/${payload.skip}/${payload.limit}`);
         commit('fetchBlog', response);
     }
 }

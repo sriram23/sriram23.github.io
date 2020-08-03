@@ -3,9 +3,10 @@
         <loading :active.sync="isLoading" 
         :can-cancel="false" 
         :is-full-page="fullPage"></loading>
-        <div class="blog-card" v-for="blog in blogs" :key="blog._id">
+        <div class="blog-card" v-for="blog in currentBlog" :key="blog._id">
             <BlogCard @cardClicked="navigateTo(blog)" :title="blog.title" :author="blog.author" :desc="blog.content" :date="convertTime(blog.createdAt)"/>
         </div>
+        <div @click="loadMore" class="load-more">Load More</div>
     </div>
 </template>
 
@@ -25,6 +26,9 @@ export default {
     data() {
         return{
             isLoading: true,
+            skip: 1,
+            limit: 5,
+            currentBlog: [],
         }
     },
     computed: {
@@ -34,21 +38,29 @@ export default {
     },
     methods: {
         ...mapActions(['fetchBlog']),
-        navigateTo(blog) {
-            this.$router.push(`/blog/${blog._id}/${blog.title}`);
-        },
-        async renderBlogs() {
+        // navigateTo(blog) {
+        //     this.$router.push(`/blog/${blog._id}/${blog.title}`);
+        // },
+        async renderBlogs(data) {
             this.isLoading = true;
-            await this.fetchBlog();
+            await this.fetchBlog(data);
+            this.currentBlog = this.blogs;
             this.isLoading = false;
         },
         convertTime(isoTime) {
             const time = moment(isoTime).fromNow();
             return time;
+        },
+        async loadMore() {
+            this.isLoading = true;
+            ++this.skip;
+            await this.fetchBlog({skip: this.skip-1, limit: this.skip * this.limit});
+            this.currentBlog.push(...this.blogs);
+            this.isLoading = false;
         }
     },
     mounted() {
-        this.renderBlogs();
+        this.renderBlogs({skip: this.skip-1, limit: this.skip * this.limit});
     }
 }
 </script>
@@ -66,5 +78,25 @@ export default {
             width: 100%;
         }
     }
+}
+.load-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+    background: blue;
+    width: 9rem;
+    height: 3rem;
+    border-radius: 1rem;
+    border: 1px solid darkblue;
+    box-shadow: 2px 4px darkblue;
+}
+.load-more:hover {
+    box-shadow: 2px 6px darkblue;
+}
+.load-more:active {
+    box-shadow: 2px 4px darkblue;
 }
 </style>
