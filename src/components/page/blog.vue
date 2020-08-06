@@ -2,7 +2,7 @@
     <div class="blog-container">
         <loading :active.sync="isLoading" 
         :can-cancel="false" 
-        :is-full-page="fullPage"></loading>
+        :is-full-page="true"></loading>
         <div class="blog-card" v-for="blog in currentBlog" :key="blog._id">
             <BlogCard @cardClicked="navigateTo(blog)" :title="blog.title" :author="blog.author" :desc="blog.content" :date="convertTime(blog.createdAt)"/>
         </div>
@@ -54,8 +54,11 @@ export default {
         async loadMore() {
             this.isLoading = true;
             ++this.skip;
-            await this.fetchBlog({skip: this.skip-1, limit: this.skip * this.limit});
-            this.currentBlog.push(...this.blogs);
+            await this.fetchBlog({skip: this.skip-1, limit: this.limit});
+            if(this.blogs.length>0)
+                this.currentBlog.push(...this.blogs);
+            else
+                this.$toasted.info('That\'s All!').goAway(3000);
             this.isLoading = false;
         }
     },
