@@ -1,43 +1,57 @@
 <template>
     <div>
-        <div v-for="blog in blogs" :key="blog._id">
-            <div v-if="params.id===blog._id && params.title===blog.title">
-                <div class="title">{{blog.title}}</div>
-                <div class="blog-content">
-                    <h1 style="text-align: center">{{blog.title}}</h1>
-                    <hr/>
-                    <br>
-                    <div v-html="blog.content"></div>
-                </div>
-                <div class="footer">Written by <b>{{blog.author}}</b> on <i>{{convertTime(blog.createdAt)}}</i></div>
-            </div>
+        <loading :active.sync="isLoading" 
+        :can-cancel="false" 
+        :is-full-page="true"></loading>
+        <div class="title">{{currBlog.title}}</div>
+        <div class="blog-content">
+            <h1 style="text-align: center">{{currBlog.title}}</h1>
+            <hr/>
+            <br>
+            <div v-html="currBlog.content"></div>
         </div>
+        <div class="footer">Written by <b>{{currBlog.author}}</b> on <i>{{convertTime(currBlog.createdAt)}}</i></div>
     </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import moment from 'moment'
 
 export default {
     name: 'BlogView',
     data() {
         return{
-            params: {}
+            params: {},
+            currBlog: [],
+            isLoading: true,
         }
     },
     computed: {
         ...mapState([
-            'blogs'
+            'currentBlog'
         ])
     },
     methods: {
+        ...mapActions(['getBlog']),
         convertTime(isoTime) {
             const time = moment(isoTime).fromNow();
             return time;
+        },
+        async getCurrentBlog(id) {
+            this.isLoading = true;
+            try{
+                await this.getBlog(id);
+                this.currBlog = this.currentBlog.data[0];
+                console.log('Curr: ', this.currBlog);
+            } catch(err) {
+                this.$toasted.error(`Something went wrong! ${err.response.status}`).goAway(3000);
+            }
+            this.isLoading = false;
         }
     },
     mounted() {
         this.params = this.$route.params;
+        this.getCurrentBlog(this.params.id);
     }
 }
 </script>

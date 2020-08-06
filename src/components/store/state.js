@@ -1,4 +1,5 @@
 
 export default {
     blogs: [],
+    currentBlog: [],
 }

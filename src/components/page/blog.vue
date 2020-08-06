@@ -38,9 +38,9 @@ export default {
     },
     methods: {
         ...mapActions(['fetchBlog']),
-        // navigateTo(blog) {
-        //     this.$router.push(`/blog/${blog._id}/${blog.title}`);
-        // },
+        navigateTo(blog) {
+            this.$router.push(`/blog/${blog._id}/${blog.title}`);
+        },
         async renderBlogs(data) {
             this.isLoading = true;
             await this.fetchBlog(data);
