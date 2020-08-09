@@ -7,5 +7,8 @@ export default {
     },
     setBlog: (state, payload) => {
         state.currentBlog = payload;
-    }
+    },
+    setAllBlogs: (state, payload) => {
+        state.allBlogs = payload;
+    },
 }

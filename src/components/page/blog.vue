@@ -1,8 +1,8 @@
 <template>
     <div class="blog-container">
-        <loading :active.sync="isLoading" 
-        :can-cancel="false" 
-        :is-full-page="true"></loading>
+        <div v-if="isLoading" class="loader" scale="10">
+            <vue-loaders-ball-scale-multiple color="#aa0000"/>
+        </div>
         <div class="blog-card" v-for="blog in currentBlog" :key="blog._id">
             <BlogCard @cardClicked="navigateTo(blog)" :title="blog.title" :author="blog.author" :desc="blog.content" :date="convertTime(blog.createdAt)"/>
         </div>
@@ -12,8 +12,6 @@
 
 <script>
 import moment from 'moment'
-import Loading from 'vue-loading-overlay';
-import 'vue-loading-overlay/dist/vue-loading.css';
 import BlogCard from './blog-card'
 import { mapActions, mapState } from 'vuex'
 
@@ -21,7 +19,6 @@ export default {
     name: 'Blog',
     components: {
         BlogCard,
-        Loading,
     },
     data() {
         return{
@@ -101,5 +98,12 @@ export default {
 }
 .load-more:active {
     box-shadow: 2px 4px darkblue;
+}
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
 }
 </style>

@@ -1,9 +1,12 @@
 <template>
     <div>
-        <loading :active.sync="isLoading" 
-        :can-cancel="false" 
-        :is-full-page="true"></loading>
-        <div class="title">{{currBlog.title}}</div>
+        <div v-if="isLoading" class="loader" scale="10">
+            <vue-loaders-ball-scale-multiple color="#aa0000"/>
+        </div>
+        <div class="title-container">
+            <div class="title">{{currBlog.title}}</div>
+            <div class="edit-button" @click="editClicked">Edit</div>
+        </div>
         <div class="blog-content">
             <h1 style="text-align: center">{{currBlog.title}}</h1>
             <hr/>
@@ -47,6 +50,10 @@ export default {
                 this.$toasted.error(`Something went wrong! ${err.response.status}`).goAway(3000);
             }
             this.isLoading = false;
+        },
+        editClicked() {
+            console.log('ID:',this.params.id);
+            this.$router.replace(`/update/${this.params.id}`)
         }
     },
     mounted() {
@@ -57,12 +64,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.title {
-    font-size: 3rem;
+.title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background: #aa0000;
-    color: #fff;
     border-top: 1px solid #fff;
+    padding: 1rem;
+    .title {
+        font-size: 3rem;
+        color: #fff;
+    }
+    .edit-button {
+        background: #fff;
+        padding: 1rem 1.5rem;
+        margin: 1.5rem;
+        color: #aa0000;
+        font-weight: bold;
+        border-radius: 1rem;
+        box-shadow: 2px 2px #fff;
+        cursor: pointer;
+    }
+    .edit-button:active {
+        box-shadow: 1px 1px #fff;
+    }
 }
+
 .blog-content {
     border: 0.5px solid #000;
     box-shadow: 0 0 10px #000000;
@@ -78,5 +105,12 @@ export default {
     padding: 2rem;
     background: #aa0000;
     color: #fff;
+}
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
 }
 </style>

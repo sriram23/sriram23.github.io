@@ -13,5 +13,13 @@ export default {
     getBlog: async({ commit }, payload) => {
         const response = await axios.get(`https://blooming-sea-36559.herokuapp.com/blog/${payload}`);
         commit('setBlog', response);
+    },
+    getAllBlogs: async({ commit }) => {
+        const response = await axios.get(`https://blooming-sea-36559.herokuapp.com/fetch-all`);
+        commit('setAllBlogs', response);
+    },
+    updateBlog: async(payload) => {
+        const response = await axios.post('https://blooming-sea-36559.herokuapp.com/update',payload);
+        return response;
     }
 }
